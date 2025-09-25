@@ -37,5 +37,5 @@ Este projeto é um exemplo de **CRUD de usuários** desenvolvido com **Spring Bo
 1. Clone o repositório:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/hugoodesa/crud-user-sboot-test.git
 cd CRUD-springboot-test
