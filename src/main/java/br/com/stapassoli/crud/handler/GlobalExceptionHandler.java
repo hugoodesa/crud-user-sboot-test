@@ -1,6 +1,7 @@
 package br.com.stapassoli.crud.handler;
 
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -19,6 +21,8 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors()
                 .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+
+        log.warn("error found on request: {}", errors);
         return ResponseEntity.badRequest().body(errors);
     }
 
@@ -27,6 +31,8 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
         ex.getConstraintViolations().forEach(cv ->
                 errors.put(cv.getPropertyPath().toString(), cv.getMessage()));
+
+        log.warn("Constraint error: {}", ex.getConstraintViolations());
         return ResponseEntity.badRequest().body(errors);
     }
 

@@ -2,6 +2,7 @@ package br.com.stapassoli.crud.service;
 
 import br.com.stapassoli.crud.dto.UserRequestDTO;
 import br.com.stapassoli.crud.dto.UserResponseDTO;
+import br.com.stapassoli.crud.mapper.UserMapper;
 import br.com.stapassoli.crud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +14,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
-    //private final UserMapper mapper;
+    private final UserMapper mapper;
 
     @Override
     public UserResponseDTO save(UserRequestDTO requestDTO) {
-        return null;
+        var requestEntity = mapper.toEntity(requestDTO);
+        var entity = repository.save(requestEntity);
+        return mapper.toResponseDTO(entity);
     }
 
     @Override
